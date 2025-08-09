@@ -62,8 +62,8 @@
                     </ul>
 
                 </div>
-                {{ $posts->links() }}
             </div>
+            {{ $posts->links() }}
         </div>
     </div>
 </x-app-layout>
