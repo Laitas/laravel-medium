@@ -10,18 +10,23 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <ul class="flex flex-wrap justify-center text-center text-sm font-medium text-gray-500">
+                    <ul class="flex flex-wrap justify-center gap-4 text-center text-sm font-medium text-gray-500">
+                        <li>
+                            <a href="#" class="active inline-block rounded-lg bg-blue-600 px-4 py-3 text-white"
+                                aria-current="page">All</a>
+                        </li>
                         @foreach ($categories as $category)
-                            <li class="me-2">
-                                <a href="#" class="active inline-block rounded-lg bg-blue-600 px-4 py-3 text-white"
+                            <li>
+                                <a href="#"
+                                    class="active inline-block rounded-lg bg-blue-600 px-4 py-3 text-white"
                                     aria-current="page">{{ $category->name }}</a>
                             </li>
                         @endforeach
-                        <li class="me-2">
+                        <li>
                             <a href="#" class="active inline-block rounded-lg bg-blue-600 px-4 py-3 text-white"
                                 aria-current="page">Tab 1</a>
                         </li>
-                        <li class="me-2">
+                        <li>
                             <a href="#"
                                 class="inline-block rounded-lg px-4 py-3 hover:bg-gray-100 hover:text-gray-900">Tab
                                 2</a>

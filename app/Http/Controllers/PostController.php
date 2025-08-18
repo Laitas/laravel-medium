@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create', ['categories' => Category::all()]);
     }
 
     /**
@@ -30,7 +30,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'required|image|max:2048',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $post = Post::create($request->only('title', 'content', 'category_id'));
+
+        if ($request->hasFile('image')) {
+            $post->addMedia($request->file('image'))->toMediaCollection('images');
+        }
+
+        return redirect()->route('posts.show', $post);
     }
 
     /**
