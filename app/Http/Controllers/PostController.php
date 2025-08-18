@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -30,28 +32,33 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required',
             'content' => 'required',
             'image' => 'required|image|max:2048',
             'category_id' => 'required|exists:categories,id',
+            'published_at' => 'nullable|datetime'
         ]);
 
-        $post = Post::create($request->only('title', 'content', 'category_id'));
+        $image = $data['image'];
+        unset($data['image']);
+        $data['user_id'] = Auth::id();
+        $data['slug'] = Str::slug($data['title']);
+        $imagePath = $image->store('posts', 'public');
+        $data['image'] = $imagePath;
 
-        if ($request->hasFile('image')) {
-            $post->addMedia($request->file('image'))->toMediaCollection('images');
-        }
+        Post::create($data);
 
-        return redirect()->route('posts.show', $post);
+        return redirect()->route('posts.show', ['slug' => $data['slug']]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(String $slug)
     {
-        //
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
