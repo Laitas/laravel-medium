@@ -55,7 +55,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(String $slug)
+    public function show(String $username, String $slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
         return view('posts.show', ['post' => $post]);

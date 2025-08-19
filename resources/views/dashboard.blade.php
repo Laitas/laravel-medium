@@ -41,19 +41,21 @@
                     <ul class="flex flex-wrap justify-center gap-6 text-center text-sm font-medium text-gray-500">
                         @foreach ($posts as $post)
                             <div class="max-w-sm rounded-lg border border-gray-200 bg-white shadow-sm">
-                                <a href="{{ route('posts.show', $post->slug) }}">
+                                <a
+                                    href="{{ route('posts.show', ['username' => $post->user->username, 'slug' => $post->slug]) }}">
                                     <img class="size-64 rounded-t-lg object-cover"
                                         src="{{ Storage::url($post->image) }}"
                                         onerror="this.src='https://picsum.photos/400'" alt="" />
                                 </a>
                                 <div class="p-5">
-                                    <a href="{{ route('posts.show', $post->slug) }}">
+                                    <a
+                                        href="{{ route('posts.show', ['username' => $post->user->username, 'slug' => $post->slug]) }}">
                                         <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                                             {{ $post->title }}</h2>
                                     </a>
                                     <p class="mb-3 font-normal text-gray-700">{{ Str::words($post->content, 20) }}...
                                     </p>
-                                    <a href="{{ route('posts.show', $post->slug) }}"
+                                    <a href="{{ route('posts.show', ['username' => $post->user->username, 'slug' => $post->slug]) }}"
                                         class="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
                                         Read more
                                         <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"

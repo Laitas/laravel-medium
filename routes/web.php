@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
         return view('posts', ['posts' => DB::table('posts')->paginate(10)]);
     })->name('posts');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-    Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('/@{username}/{slug}', [PostController::class, 'show'])->name('posts.show');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 });
 
