@@ -42,7 +42,9 @@
                         @foreach ($posts as $post)
                             <div class="max-w-sm rounded-lg border border-gray-200 bg-white shadow-sm">
                                 <a href="{{ route('posts.show', $post->slug) }}">
-                                    <img class="rounded-t-lg" src="https://picsum.photos/400" alt="" />
+                                    <img class="size-64 rounded-t-lg object-cover"
+                                        src="{{ Storage::url($post->image) }}"
+                                        onerror="this.src='https://picsum.photos/400'" alt="" />
                                 </a>
                                 <div class="p-5">
                                     <a href="{{ route('posts.show', $post->slug) }}">
