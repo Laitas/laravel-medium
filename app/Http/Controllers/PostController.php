@@ -49,7 +49,7 @@ class PostController extends Controller
 
         Post::create($data);
 
-        return redirect()->route('posts.show', ['slug' => $data['slug']]);
+        return redirect()->route('posts.show', ['username' => Auth::user()->username, 'slug' => $data['slug']]);
     }
 
     /**
