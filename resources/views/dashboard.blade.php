@@ -40,7 +40,7 @@
 
                     <ul class="flex flex-wrap justify-center gap-6 text-center text-sm font-medium text-gray-500">
                         @foreach ($posts as $post)
-                            <div class="max-w-sm rounded-lg border border-gray-200 bg-white shadow-sm">
+                            <li class="max-w-sm rounded-lg border border-gray-200 bg-white shadow-sm">
                                 <a
                                     href="{{ route('posts.show', ['username' => $post->user->username, 'slug' => $post->slug]) }}">
                                     <img class="size-64 rounded-t-lg object-cover"
@@ -65,7 +65,7 @@
                                         </svg>
                                     </a>
                                 </div>
-                            </div>
+                            </li>
                         @endforeach
 
                     </ul>

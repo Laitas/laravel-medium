@@ -26,7 +26,8 @@
                         <div class="my-auto">
 
                             <div>
-                                <span>{{ $post->user->username }}</span>
+                                <a href="{{ route('profile.show', $post->user) }}"
+                                    class="hover:underline">{{ $post->user->username }}</a>
                                 <span>•</span>
                                 <span class="text-green-500">Follow</span>
                             </div>
