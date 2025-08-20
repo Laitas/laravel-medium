@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="py-12">
-        <div class="mx-auto flex max-w-7xl space-y-6 sm:px-6 lg:px-8">
+        <div class="mx-auto flex max-w-7xl space-x-6 space-y-6 sm:px-6 lg:px-8">
             {{-- Left --}}
             <section class="flex flex-1 flex-col gap-6">
 
@@ -41,7 +41,10 @@
             </section>
             {{-- Right --}}
             <section class="w-80">
-                <section class="flex flex-col gap-4">
+                <section x-data="{
+                    isFollowing: {{ $user->followers()->where('follower_id', Auth::id())->exists() ? 'true' : 'false' }},
+                    followers_count: {{ $user->followers()->count() }}
+                }" class="flex flex-col gap-4">
                     @if ($user->image)
                         <img class="size-16 rounded-full object-cover" src="{{ Storage::url($user->image) }}"
                             alt="{{ $user->name }}" />
@@ -51,15 +54,25 @@
                     @endif
                     <div class="flex flex-col">
                         <span class="font-semibold">{{ $user->username }}</span>
-                        <span class="text-sm text-gray-500">{{ $user->followers()->count() }} followers</span>
+                        <span class="text-sm text-gray-500" x-text="followers_count + ' followers'"></span>
                     </div>
                     @if ($user->bio)
                         <p>{{ $user->bio }}</p>
                     @endif
-
-                    <div>
-                        <button class="rounded-3xl bg-green-500 px-6 py-2 text-white" type="button">Follow</button>
-                    </div>
+                    @if (Auth::user()->isNot($user))
+                        <button class="w-fit rounded-3xl px-6 py-2 text-white" type="button"
+                            x-text="isFollowing ? 'Unfollow' : 'Follow'"
+                            :class="isFollowing ? 'bg-red-500' : 'bg-green-500'"
+                            @click="fetch('/follow/' + {{ $user->id }}, {
+                                method: 'POST',
+                                headers: { 'X-Requested-With' : 'XMLHttpRequest',
+                            'X-CSRF-Token': '{{ csrf_token() }}'
+                            }
+                            }).then(res => res.json()).then(data => {
+                                isFollowing = data.following;
+                                followers_count = data.followers_count;
+                            })"></button>
+                    @endif
                 </section>
             </section>
         </div>
