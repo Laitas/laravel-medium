@@ -51,7 +51,7 @@
                     @endif
                     <div class="flex flex-col">
                         <span class="font-semibold">{{ $user->username }}</span>
-                        <span class="text-sm text-gray-500">26K followers</span>
+                        <span class="text-sm text-gray-500">{{ $user->followers()->count() }} followers</span>
                     </div>
                     @if ($user->bio)
                         <p>{{ $user->bio }}</p>
