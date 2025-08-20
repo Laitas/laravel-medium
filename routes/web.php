@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/@{username}/{slug}', [PostController::class, 'show'])->name('posts.show');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::post('/posts/like/{postId}', [PostController::class, 'like'])->name('posts.like');
     Route::post('/follow/{userId}', [FollowerController::class, 'follow'])->name('follow');
 });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Likes;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -83,5 +84,24 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function like(Request $request, $postId)
+    {
+        $post = Post::findOrFail($postId);
+        $user = $request->user();
+
+        if ($post->likes()->where('user_id', $user->id)->exists()) {
+            Likes::destroy(['user_id' => $user->id, 'post_id' => $post->id]);
+            $liked = false;
+        } else {
+            Likes::create(['user_id' => $user->id, 'post_id' => $post->id]);
+            $liked = true;
+        }
+
+        return response()->json([
+            'liked' => $liked,
+            'likes_count' => $post->likes()->count()
+        ]);
     }
 }
