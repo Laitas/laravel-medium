@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 Route::get('/@{user:username}', [PublicProfileController::class, 'show'])->name('profile.show');
 
-Route::get('/dashboard', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard/{category?}', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/posts', function () {

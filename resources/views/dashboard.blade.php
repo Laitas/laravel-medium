@@ -12,25 +12,17 @@
 
                     <ul class="flex flex-wrap justify-center gap-4 text-center text-sm font-medium text-gray-500">
                         <li>
-                            <a href="#" class="active inline-block rounded-lg bg-blue-600 px-4 py-3 text-white"
-                                aria-current="page">All</a>
+                            <a href="/dashboard"
+                                class="active {{ url('/dashboard') === url()->current() ? 'bg-blue-600 text-white' : 'hover:bg-gray-100 text-gray-600' }} inline-block rounded-lg px-4 py-3"
+                                data-current="{{ url()->query(url('/dashboard')) }}" aria-current="page">All</a>
                         </li>
                         @foreach ($categories as $category)
                             <li>
-                                <a href="#"
-                                    class="active inline-block rounded-lg bg-blue-600 px-4 py-3 text-white"
+                                <a href="/dashboard/{{ $category->name }}"
+                                    class="active {{ url('/dashboard/' . $category->name) === url()->current() ? 'bg-blue-600 text-white' : 'hover:bg-gray-100 text-gray-600' }} inline-block rounded-lg px-4 py-3"
                                     aria-current="page">{{ $category->name }}</a>
                             </li>
                         @endforeach
-                        <li>
-                            <a href="#" class="active inline-block rounded-lg bg-blue-600 px-4 py-3 text-white"
-                                aria-current="page">Tab 1</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="inline-block rounded-lg px-4 py-3 hover:bg-gray-100 hover:text-gray-900">Tab
-                                2</a>
-                        </li>
 
                     </ul>
 

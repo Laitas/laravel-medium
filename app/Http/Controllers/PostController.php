@@ -15,9 +15,14 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(String $category)
     {
-        return view('dashboard', ['categories' => Category::get(), 'posts' => Post::paginate(10)]);
+
+        if (!$category) {
+            return view('dashboard', ['categories' => Category::get(), 'posts' => Post::paginate(10)]);
+        }
+        $category_id = Category::where('name', $category)->value('id');
+        return view('dashboard', ['categories' => Category::get(), 'posts' => Post::where('category_id', $category_id)->paginate(10)]);
     }
 
     /**
